@@ -31,7 +31,9 @@ const GOOGLE_APPS_SCRIPT_URL = ""; // filled in after church approves
 
 const STORAGE_LANG_KEY = "plan-salvacion.lang";
 const STORAGE_SUBMIT_LOG_KEY = "plan-salvacion.submit-log"; // JSON array of recent submit timestamps
+const SESSION_SPLASH_SEEN_KEY = "plan-salvacion.splash-seen";
 const DEFAULT_LANG = "es";
+const SPLASH_DURATION_MS = 2500; // matches CSS splash-fade end (1.95s + 0.55s)
 
 // Spam / abuse protection thresholds (all client-side; server adds another layer later).
 const SUBMIT_COOLDOWN_MS = 60 * 60 * 1000;      // 1 hour between submits from same browser
@@ -295,6 +297,40 @@ function initForm() {
   });
 }
 
+function initSplash() {
+  const splash = document.getElementById("splash");
+  if (!splash) {
+    document.body.classList.remove("splashing");
+    document.body.classList.add("splash-done");
+    return;
+  }
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const seen = sessionStorage.getItem(SESSION_SPLASH_SEEN_KEY) === "1";
+
+  const dismiss = () => {
+    splash.remove();
+    document.body.classList.remove("splashing");
+    document.body.classList.add("splash-done");
+  };
+
+  if (reduced || seen) {
+    dismiss();
+    return;
+  }
+
+  // Tap anywhere on the splash to skip.
+  splash.addEventListener("click", () => {
+    splash.style.animation = "splash-fade 0.25s ease-out forwards";
+    setTimeout(dismiss, 260);
+  }, { once: true });
+
+  // Auto-dismiss when the CSS animation completes.
+  setTimeout(dismiss, SPLASH_DURATION_MS);
+
+  sessionStorage.setItem(SESSION_SPLASH_SEEN_KEY, "1");
+}
+
 function initStats() {
   const year = new Date().getFullYear();
   const yearEl = document.getElementById("stats-year");
@@ -309,6 +345,7 @@ function initStats() {
 
 document.addEventListener("DOMContentLoaded", () => {
   pageLoadedAt = Date.now();
+  initSplash();
   document.getElementById("year").textContent = new Date().getFullYear();
   initLanguage();
   initStats();

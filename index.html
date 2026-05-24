@@ -4,8 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0a1226" />
-    <title data-i18n="meta.title">Plan de Salvación · Iglesia Bautista Bíblica</title>
+    <title data-i18n="meta.title">¿Estás seguro de tu eternidad? · IBB Grand Rapids</title>
     <meta name="description" data-i18n="meta.description" content="¿Estás seguro de tu eternidad? Conoce el Plan de Salvación y conéctate con la Iglesia Bautista Bíblica de Grand Rapids." />
+
+    <!-- Open Graph: rich preview when link is shared on WhatsApp, iMessage, Facebook, etc. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://joining8384.github.io/plan-salvacion/" />
+    <meta property="og:title" content="¿Estás seguro de tu eternidad?" />
+    <meta property="og:description" content="Conoce el Plan de Salvación · Iglesia Bautista Bíblica – Grand Rapids" />
+    <meta property="og:locale" content="es_US" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:site_name" content="Iglesia Bautista Bíblica – Grand Rapids" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="¿Estás seguro de tu eternidad?" />
+    <meta name="twitter:description" content="Conoce el Plan de Salvación · IBB Grand Rapids" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -202,10 +215,96 @@
         .animate-fade-up, .animate-glow { animation: none !important; }
         .cross-glow { animation: none !important; }
       }
+
+      /* ===== Splash intro ===== */
+      .splash {
+        position: fixed; inset: 0; z-index: 100;
+        background:
+          radial-gradient(ellipse 70% 50% at 50% 50%, rgba(217, 164, 65, 0.20), transparent 70%),
+          #050912;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        animation: splash-fade 0.55s ease-out 1.95s both;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .splash-cross {
+        width: 60vw; max-width: 360px; height: auto;
+        transform-origin: center center;
+        animation: splash-zoom 2.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        will-change: transform, opacity, filter;
+      }
+      .splash-skip {
+        position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+        color: rgba(246, 217, 138, 0.45); font-size: 0.75rem;
+        letter-spacing: 0.15em; text-transform: uppercase;
+        animation: splash-skip-in 0.4s ease-out 1.2s both;
+        pointer-events: none;
+      }
+
+      @keyframes splash-zoom {
+        0% {
+          transform: scale(2.4) translateY(0);
+          opacity: 0;
+          filter: drop-shadow(0 0 80px rgba(238, 196, 106, 1)) brightness(1.25);
+        }
+        15% { opacity: 1; }
+        100% {
+          transform: scale(0.95) translateY(-12vh);
+          opacity: 1;
+          filter: drop-shadow(0 0 30px rgba(238, 196, 106, 0.5)) brightness(1);
+        }
+      }
+      @keyframes splash-fade {
+        from { opacity: 1; }
+        to { opacity: 0; visibility: hidden; }
+      }
+      @keyframes splash-skip-in {
+        from { opacity: 0; transform: translate(-50%, 8px); }
+        to   { opacity: 1; transform: translate(-50%, 0); }
+      }
+
+      body.splashing { overflow: hidden; }
+      body.splashing > header,
+      body.splashing > section,
+      body.splashing > footer { opacity: 0; }
+      body.splash-done > header,
+      body.splash-done > section,
+      body.splash-done > footer {
+        animation: page-reveal 0.55s ease-out both;
+      }
+      @keyframes page-reveal {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .splash { display: none !important; }
+        body.splashing { overflow: auto !important; }
+        body.splashing > header,
+        body.splashing > section,
+        body.splashing > footer { opacity: 1 !important; }
+      }
     </style>
   </head>
 
-  <body class="text-gray-100 font-sans antialiased min-h-screen">
+  <body class="text-gray-100 font-sans antialiased min-h-screen splashing">
+    <!-- Splash intro (cinematic cross zoom-out reveal). Removed by app.js after animation
+         or immediately if already shown this session / user prefers reduced motion. -->
+    <div id="splash" class="splash" aria-hidden="true">
+      <svg class="splash-cross" viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="splashCrossGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fbe7b0" />
+            <stop offset="55%" stop-color="#eec46a" />
+            <stop offset="100%" stop-color="#a87a25" />
+          </linearGradient>
+        </defs>
+        <rect x="42" y="10" width="16" height="140" rx="2" fill="url(#splashCrossGrad)" />
+        <rect x="20" y="48" width="60" height="16" rx="2" fill="url(#splashCrossGrad)" />
+      </svg>
+      <div class="splash-skip" data-i18n="splash.skip">Toca para continuar</div>
+    </div>
+
     <!-- Top bar -->
     <header class="absolute top-0 inset-x-0 z-10 flex justify-end p-4 sm:p-6">
       <div class="lang-pill" role="group" aria-label="Language selector">

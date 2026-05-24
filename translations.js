@@ -3,7 +3,7 @@
 window.TRANSLATIONS = {
   es: {
     meta: {
-      title: "Plan de Salvación · Iglesia Bautista Bíblica",
+      title: "¿Estás seguro de tu eternidad? · IBB Grand Rapids",
       description: "¿Estás seguro de tu eternidad? Conoce el Plan de Salvación y conéctate con la Iglesia Bautista Bíblica de Grand Rapids.",
     },
     hero: {
@@ -52,6 +52,9 @@ window.TRANSLATIONS = {
       salvationsLabel: 'han dicho <strong class="text-gold-400">SÍ</strong><br/>a Cristo',
       cta: "¿Quieres ser el próximo?",
     },
+    splash: {
+      skip: "Toca para continuar",
+    },
     form: {
       heading: "¿Quieres saber más?",
       subheading: "Déjanos tus datos y nos pondremos en contacto contigo.",
@@ -90,7 +93,7 @@ window.TRANSLATIONS = {
 
   en: {
     meta: {
-      title: "Plan of Salvation · Bible Baptist Church",
+      title: "Are you sure about your eternity? · IBB Grand Rapids",
       description: "Are you sure about your eternity? Learn the Plan of Salvation and connect with Bible Baptist Church of Grand Rapids.",
     },
     hero: {
@@ -138,6 +141,9 @@ window.TRANSLATIONS = {
       visitsLabel: "people have<br/>visited this page",
       salvationsLabel: 'have said <strong class="text-gold-400">YES</strong><br/>to Christ',
       cta: "Want to be the next one?",
+    },
+    splash: {
+      skip: "Tap to continue",
     },
     form: {
       heading: "Want to know more?",
