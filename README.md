@@ -154,6 +154,53 @@ function doPost(e) {
 
 ---
 
+## Live counters (visits + salvations)
+
+The page shows two counters mid-scroll: **"X personas han visitado · Y han dicho SÍ a Cristo"**, framed as year-to-date stats with the current year shown automatically.
+
+### Current state: placeholder numbers
+
+While the church evaluates the project, the counters display fixed example numbers. Edit them in `app.js` at the top:
+
+```js
+const STATS_PLACEHOLDER = {
+  visits: 47,
+  salvations: 6,
+};
+```
+
+### Going live (after Apps Script is set up)
+
+Same Apps Script + Sheet from the form section grows two new responsibilities:
+
+1. **A `Stats` tab** in the same Sheet with one row per year:
+   ```
+   year | visits | salvations
+   2026 | 1247   | 23
+   2027 | ...    | ...
+   ```
+   Year resets are automatic — each Jan 1, a new row starts at zero. The page only ever displays the current year's row.
+
+2. **Two endpoints** on the same Apps Script:
+   - `GET ?action=stats` → returns `{ year, visits, salvations }` for the current year. Page fetches this on load.
+   - `POST {event: "visit"}` → increments `visits` for the current year. Page sends this on load, debounced (see below).
+
+3. **The salvations counter** increments automatically inside the existing `doPost` form handler whenever `data.professionOfFaith === "yes"`.
+
+### Preventing double-counts on refresh
+
+You asked specifically about this. The plan when the real counter goes live:
+
+- **Per-browser cooldown via `localStorage`.** On page load, the script checks `localStorage.getItem("plan-salvacion.last-visit")`. If a timestamp exists and it's less than 12 hours old, **don't ping the counter**. Otherwise ping it and update the timestamp.
+- Effect: someone refreshing their browser 50 times still counts as 1 visit. Same person opening the page tomorrow counts again (which is the right behavior — it's a returning visitor).
+- This handles 95% of refresh inflation. The remaining edge cases (different browsers, incognito, devices) can't be deduped client-side without invasive fingerprinting, and the trickle is small enough to ignore.
+
+### Visibility
+
+Both counters are public on the page right now (your call from chat). If the church later prefers to keep the salvations count private, hiding it is a one-line change — wrap that `<div>` with `class="hidden"` and the counter still tracks server-side, the church just sees it in the Sheet.
+
+---
+
 ## Regenerating the QR code
 
 If the URL ever changes (e.g. you move to a custom domain), regenerate:

@@ -1,4 +1,17 @@
 // =============================================================================
+// CONFIG — Stats counters (PLACEHOLDER for demo)
+// =============================================================================
+// These numbers are hardcoded just so the church can see what the live page
+// will look like. Once the Apps Script backend is set up, this whole block
+// gets replaced with: fetch(STATS_ENDPOINT).then(...) → live counters.
+// Edit these freely until then.
+const STATS_PLACEHOLDER = {
+  visits: 47,
+  salvations: 6,
+};
+// =============================================================================
+
+// =============================================================================
 // CONFIG — Form backend
 // =============================================================================
 // TEMP: This Web3Forms access key sends submissions to the email on file with
@@ -230,9 +243,22 @@ function initForm() {
   });
 }
 
+function initStats() {
+  const year = new Date().getFullYear();
+  const yearEl = document.getElementById("stats-year");
+  if (yearEl) yearEl.textContent = year;
+
+  const fmt = (n) => n.toLocaleString();
+  const visitsEl = document.getElementById("stats-visits");
+  const salvEl = document.getElementById("stats-salvations");
+  if (visitsEl) visitsEl.textContent = fmt(STATS_PLACEHOLDER.visits);
+  if (salvEl) salvEl.textContent = fmt(STATS_PLACEHOLDER.salvations);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("year").textContent = new Date().getFullYear();
   initLanguage();
+  initStats();
   initPrayerToggle();
   initForm();
 });

@@ -46,6 +46,12 @@ window.TRANSLATIONS = {
         time: "Domingos 9:30 a.m.",
       },
     },
+    stats: {
+      thisYear: "Este año",
+      visitsLabel: "personas han<br/>visitado esta página",
+      salvationsLabel: 'han dicho <strong class="text-gold-400">SÍ</strong><br/>a Cristo',
+      cta: "¿Quieres ser el próximo?",
+    },
     form: {
       heading: "¿Quieres saber más?",
       subheading: "Déjanos tus datos y nos pondremos en contacto contigo.",
@@ -124,6 +130,12 @@ window.TRANSLATIONS = {
         label: "Worship service:",
         time: "Sundays 9:30 a.m.",
       },
+    },
+    stats: {
+      thisYear: "This year",
+      visitsLabel: "people have<br/>visited this page",
+      salvationsLabel: 'have said <strong class="text-gold-400">YES</strong><br/>to Christ',
+      cta: "Want to be the next one?",
     },
     form: {
       heading: "Want to know more?",
