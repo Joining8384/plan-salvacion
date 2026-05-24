@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a1226" />
+    <title data-i18n="meta.title">Plan de Salvación · Iglesia Bautista Bíblica</title>
+    <meta name="description" data-i18n="meta.description" content="¿Estás seguro de tu eternidad? Conoce el Plan de Salvación y conéctate con la Iglesia Bautista Bíblica de Grand Rapids." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              serif: ["'Cormorant Garamond'", "ui-serif", "Georgia", "serif"],
+            },
+            colors: {
+              navy: {
+                950: "#070d1c",
+                900: "#0a1226",
+                800: "#101a35",
+                700: "#172447",
+              },
+              gold: {
+                300: "#f6d98a",
+                400: "#eec46a",
+                500: "#d9a441",
+              },
+            },
+            keyframes: {
+              "fade-up": {
+                "0%": { opacity: "0", transform: "translateY(12px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              glow: {
+                "0%, 100%": { opacity: "0.55", transform: "scale(1)" },
+                "50%": { opacity: "0.85", transform: "scale(1.04)" },
+              },
+            },
+            animation: {
+              "fade-up": "fade-up 0.7s ease-out both",
+              glow: "glow 6s ease-in-out infinite",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        background:
+          radial-gradient(ellipse 80% 50% at 50% 0%, rgba(217, 164, 65, 0.18), transparent 60%),
+          radial-gradient(ellipse 60% 40% at 50% 100%, rgba(23, 36, 71, 0.6), transparent 70%),
+          linear-gradient(180deg, #070d1c 0%, #0a1226 40%, #070d1c 100%);
+        background-attachment: fixed;
+      }
+      .verse { font-family: "Cormorant Garamond", serif; font-style: italic; }
+      .card-glass {
+        background: linear-gradient(180deg, rgba(23, 36, 71, 0.55), rgba(10, 18, 38, 0.55));
+        border: 1px solid rgba(246, 217, 138, 0.12);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+      .input-field {
+        background: rgba(7, 13, 28, 0.6);
+        border: 1px solid rgba(246, 217, 138, 0.18);
+        color: #f5f5f5;
+        border-radius: 0.6rem;
+        padding: 0.7rem 0.9rem;
+        width: 100%;
+        transition: border-color .15s, box-shadow .15s, background .15s;
+        font-size: 1rem;
+      }
+      .input-field:focus {
+        outline: none;
+        border-color: rgba(238, 196, 106, 0.7);
+        box-shadow: 0 0 0 3px rgba(238, 196, 106, 0.18);
+        background: rgba(7, 13, 28, 0.85);
+      }
+      .input-field::placeholder { color: rgba(229, 231, 235, 0.4); }
+
+      .check {
+        display: flex; gap: 0.75rem; align-items: flex-start;
+        padding: 0.85rem 1rem;
+        border-radius: 0.7rem;
+        background: rgba(7, 13, 28, 0.5);
+        border: 1px solid rgba(246, 217, 138, 0.12);
+        cursor: pointer;
+        transition: background .15s, border-color .15s;
+      }
+      .check:hover { background: rgba(23, 36, 71, 0.5); border-color: rgba(246, 217, 138, 0.28); }
+      .check input[type="checkbox"] {
+        appearance: none; -webkit-appearance: none;
+        width: 1.2rem; height: 1.2rem; margin-top: 0.15rem;
+        border: 1.5px solid rgba(246, 217, 138, 0.55);
+        border-radius: 0.3rem;
+        background: rgba(7, 13, 28, 0.5);
+        cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .check input[type="checkbox"]:checked {
+        background: #d9a441; border-color: #d9a441;
+      }
+      .check input[type="checkbox"]:checked::after {
+        content: ""; position: absolute; left: 0.32rem; top: 0.08rem;
+        width: 0.32rem; height: 0.65rem;
+        border: solid #0a1226; border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      .prayer-wrap {
+        max-height: 0; opacity: 0; overflow: hidden;
+        transition: max-height .35s ease, opacity .25s ease, margin-top .25s ease;
+        margin-top: 0;
+      }
+      .prayer-wrap.open { max-height: 16rem; opacity: 1; margin-top: 0.75rem; }
+
+      .btn-primary {
+        background: linear-gradient(180deg, #eec46a, #d9a441);
+        color: #0a1226;
+        font-weight: 600;
+        padding: 0.95rem 1.4rem;
+        border-radius: 0.7rem;
+        width: 100%;
+        font-size: 1.05rem;
+        transition: transform .12s ease, box-shadow .2s ease, filter .15s ease;
+        box-shadow: 0 8px 24px -8px rgba(238, 196, 106, 0.45);
+      }
+      .btn-primary:hover { filter: brightness(1.05); box-shadow: 0 10px 28px -8px rgba(238, 196, 106, 0.6); }
+      .btn-primary:active { transform: translateY(1px); }
+      .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
+
+      .lang-pill {
+        display: inline-flex; align-items: center;
+        background: rgba(7, 13, 28, 0.7);
+        border: 1px solid rgba(246, 217, 138, 0.25);
+        border-radius: 999px; padding: 0.25rem;
+      }
+      .lang-pill button {
+        padding: 0.3rem 0.75rem; border-radius: 999px;
+        font-size: 0.8rem; font-weight: 600; color: rgba(246, 217, 138, 0.7);
+        transition: background .15s, color .15s;
+      }
+      .lang-pill button.active { background: #d9a441; color: #0a1226; }
+
+      .toast {
+        position: fixed; left: 50%; bottom: 1.5rem; transform: translate(-50%, 120%);
+        background: rgba(10, 18, 38, 0.95);
+        border: 1px solid rgba(246, 217, 138, 0.4);
+        color: #f6d98a; padding: 1rem 1.5rem; border-radius: 0.7rem;
+        font-weight: 600; z-index: 50;
+        transition: transform .35s cubic-bezier(.2,.9,.3,1.2), opacity .25s;
+        opacity: 0; max-width: calc(100vw - 2rem);
+        text-align: center;
+      }
+      .toast.show { transform: translate(-50%, 0); opacity: 1; }
+      .toast.error { border-color: rgba(248, 113, 113, 0.5); color: #fca5a5; }
+
+      .cross-wrap { position: relative; display: flex; justify-content: center; }
+      .cross-glow {
+        position: absolute; inset: 0; margin: auto;
+        width: 280px; height: 280px;
+        background: radial-gradient(circle, rgba(238, 196, 106, 0.55) 0%, rgba(238, 196, 106, 0.18) 30%, transparent 65%);
+        filter: blur(10px);
+        animation: glow 6s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      @media (min-width: 640px) {
+        .cross-glow { width: 360px; height: 360px; }
+      }
+
+      /* Reduce motion */
+      @media (prefers-reduced-motion: reduce) {
+        .animate-fade-up, .animate-glow { animation: none !important; }
+        .cross-glow { animation: none !important; }
+      }
+    </style>
+  </head>
+
+  <body class="text-gray-100 font-sans antialiased min-h-screen">
+    <!-- Top bar -->
+    <header class="absolute top-0 inset-x-0 z-10 flex justify-end p-4 sm:p-6">
+      <div class="lang-pill" role="group" aria-label="Language selector">
+        <button data-lang="es" class="active" aria-pressed="true">ES</button>
+        <button data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative pt-24 pb-16 sm:pt-28 sm:pb-20 px-5">
+      <div class="cross-wrap mb-8 animate-fade-up">
+        <div class="cross-glow"></div>
+        <svg viewBox="0 0 100 160" class="relative w-32 sm:w-40 h-auto drop-shadow-[0_0_30px_rgba(238,196,106,0.6)]" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="crossGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fbe7b0" />
+              <stop offset="55%" stop-color="#eec46a" />
+              <stop offset="100%" stop-color="#a87a25" />
+            </linearGradient>
+          </defs>
+          <rect x="42" y="10" width="16" height="140" rx="2" fill="url(#crossGrad)" />
+          <rect x="20" y="48" width="60" height="16" rx="2" fill="url(#crossGrad)" />
+        </svg>
+      </div>
+
+      <h1 data-i18n="hero.title" class="text-center font-serif text-4xl sm:text-5xl md:text-6xl leading-tight max-w-3xl mx-auto animate-fade-up" style="animation-delay:.1s">
+        ¿Estás seguro de <em class="text-gold-300">tu eternidad</em>?
+      </h1>
+      <p data-i18n="hero.subtitle" class="text-center text-gray-300 mt-5 max-w-xl mx-auto text-base sm:text-lg animate-fade-up" style="animation-delay:.2s">
+        Dios tiene un plan para ti. Conócelo en menos de un minuto.
+      </p>
+    </section>
+
+    <!-- Plan de Salvación -->
+    <section class="px-5 pb-12">
+      <div class="max-w-2xl mx-auto">
+        <h2 data-i18n="plan.heading" class="text-2xl sm:text-3xl font-serif text-gold-300 text-center mb-8">El Plan de Salvación</h2>
+
+        <div class="space-y-4">
+          <article class="card-glass rounded-xl p-5 sm:p-6 animate-fade-up">
+            <h3 data-i18n="plan.step1.title" class="font-semibold text-gold-300 text-lg sm:text-xl mb-2">1. Todos hemos pecado</h3>
+            <p data-i18n="plan.step1.verse" class="verse text-gray-200 text-lg leading-relaxed">"Por cuanto todos pecaron, y están destituidos de la gloria de Dios."</p>
+            <p data-i18n="plan.step1.ref" class="text-gold-400 text-sm mt-2">— Romanos 3:23</p>
+          </article>
+
+          <article class="card-glass rounded-xl p-5 sm:p-6 animate-fade-up">
+            <h3 data-i18n="plan.step2.title" class="font-semibold text-gold-300 text-lg sm:text-xl mb-2">2. El pecado tiene consecuencias</h3>
+            <p data-i18n="plan.step2.verse" class="verse text-gray-200 text-lg leading-relaxed">"Porque la paga del pecado es muerte, mas la dádiva de Dios es vida eterna en Cristo Jesús Señor nuestro."</p>
+            <p data-i18n="plan.step2.ref" class="text-gold-400 text-sm mt-2">— Romanos 6:23</p>
+          </article>
+
+          <article class="card-glass rounded-xl p-5 sm:p-6 animate-fade-up">
+            <h3 data-i18n="plan.step3.title" class="font-semibold text-gold-300 text-lg sm:text-xl mb-2">3. Dios te ama</h3>
+            <p data-i18n="plan.step3.verse" class="verse text-gray-200 text-lg leading-relaxed">"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna."</p>
+            <p data-i18n="plan.step3.ref" class="text-gold-400 text-sm mt-2">— Juan 3:16</p>
+          </article>
+
+          <article class="card-glass rounded-xl p-5 sm:p-6 animate-fade-up">
+            <h3 data-i18n="plan.step4.title" class="font-semibold text-gold-300 text-lg sm:text-xl mb-2">4. Jesús es el único camino</h3>
+            <p data-i18n="plan.step4.verse" class="verse text-gray-200 text-lg leading-relaxed">"Jesús le dijo: Yo soy el camino, y la verdad, y la vida; nadie viene al Padre, sino por mí."</p>
+            <p data-i18n="plan.step4.ref" class="text-gold-400 text-sm mt-2">— Juan 14:6</p>
+          </article>
+
+          <article class="rounded-xl p-6 sm:p-7 mt-2 text-center bg-gradient-to-br from-gold-500/20 to-gold-400/5 border border-gold-400/30">
+            <p data-i18n="plan.closing" class="verse text-xl sm:text-2xl text-gold-300 leading-relaxed">
+              Hoy puedes ser salvo. <br />
+              "Cree en el Señor Jesucristo, y serás salvo, tú y tu casa."
+            </p>
+            <p data-i18n="plan.closing.ref" class="text-gold-400 text-sm mt-3">— Hechos 16:31</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Church info -->
+    <section class="px-5 pb-12">
+      <div class="max-w-2xl mx-auto card-glass rounded-xl p-6 sm:p-8">
+        <h2 class="text-2xl font-serif text-gold-300 mb-1">Iglesia Bautista Bíblica</h2>
+        <p data-i18n="church.location" class="text-gray-400 text-sm mb-6">Grand Rapids, Michigan</p>
+
+        <div class="space-y-4 text-gray-200">
+          <a href="https://maps.google.com/?q=1273+Lamont+Ave+NW+Grand+Rapids+MI+49504" target="_blank" rel="noopener" class="flex items-start gap-3 hover:text-gold-300 transition">
+            <svg class="w-5 h-5 mt-1 text-gold-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-7-8-13a8 8 0 1116 0c0 6-8 13-8 13z"/><circle cx="12" cy="9" r="3"/></svg>
+            <span>1273 Lamont Ave NW<br/>Grand Rapids, MI 49504</span>
+          </a>
+
+          <a href="tel:+16162874503" class="flex items-center gap-3 hover:text-gold-300 transition">
+            <svg class="w-5 h-5 text-gold-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            <span>616-287-4503</span>
+          </a>
+
+          <a href="https://wa.me/16162874503" target="_blank" rel="noopener" class="flex items-center gap-3 hover:text-gold-300 transition">
+            <svg class="w-5 h-5 text-gold-400 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A12 12 0 003.48 20.52L2 22l1.62-1.46A12 12 0 0020.52 3.48zM12 20.5a8.46 8.46 0 01-4.32-1.18l-.31-.18-3.07.81.82-3-.2-.32A8.5 8.5 0 1112 20.5zm4.69-6.36c-.26-.13-1.53-.75-1.76-.84-.24-.09-.41-.13-.58.13-.17.26-.66.84-.81 1.01-.15.17-.3.19-.55.06-.26-.13-1.09-.4-2.07-1.27-.77-.69-1.28-1.54-1.43-1.8-.15-.26-.02-.4.11-.53.11-.11.26-.3.39-.45.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.17 0-.45.06-.69.32-.24.26-.91.89-.91 2.17 0 1.28.93 2.52 1.06 2.69.13.17 1.84 2.81 4.46 3.94.62.27 1.11.43 1.49.55.62.2 1.19.17 1.64.1.5-.07 1.53-.62 1.75-1.22.22-.6.22-1.11.15-1.22-.07-.11-.24-.17-.5-.3z"/></svg>
+            <span>WhatsApp</span>
+          </a>
+
+          <a href="https://iglesia-bautista-biblica.org" target="_blank" rel="noopener" class="flex items-center gap-3 hover:text-gold-300 transition">
+            <svg class="w-5 h-5 text-gold-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg>
+            <span>iglesia-bautista-biblica.org</span>
+          </a>
+
+          <div class="flex items-center gap-3 pt-2 border-t border-gold-400/15 mt-4">
+            <svg class="w-5 h-5 text-gold-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span><strong data-i18n="church.service.label">Servicio de adoración:</strong> <span data-i18n="church.service.time">Domingos 9:30 a.m.</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Connect form -->
+    <section class="px-5 pb-20">
+      <div class="max-w-2xl mx-auto card-glass rounded-xl p-6 sm:p-8">
+        <h2 data-i18n="form.heading" class="text-2xl sm:text-3xl font-serif text-gold-300 mb-2">¿Quieres saber más?</h2>
+        <p data-i18n="form.subheading" class="text-gray-400 mb-6">Déjanos tus datos y nos pondremos en contacto contigo.</p>
+
+        <form id="connect-form" class="space-y-4" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label data-i18n="form.firstName.label" class="block text-sm text-gray-300 mb-1.5" for="first-name">Nombre <span class="text-gold-400">*</span></label>
+              <input id="first-name" name="firstName" type="text" required autocomplete="given-name" class="input-field" data-i18n-attr="placeholder|form.firstName.placeholder" placeholder="Tu nombre" />
+            </div>
+            <div>
+              <label data-i18n="form.lastName.label" class="block text-sm text-gray-300 mb-1.5" for="last-name">Apellido <span class="text-gold-400">*</span></label>
+              <input id="last-name" name="lastName" type="text" required autocomplete="family-name" class="input-field" data-i18n-attr="placeholder|form.lastName.placeholder" placeholder="Tu apellido" />
+            </div>
+          </div>
+
+          <div>
+            <label data-i18n="form.address.label" class="block text-sm text-gray-300 mb-1.5" for="address">Dirección <span class="text-gray-500 text-xs" data-i18n="form.optional">(opcional)</span></label>
+            <input id="address" name="address" type="text" autocomplete="street-address" class="input-field" data-i18n-attr="placeholder|form.address.placeholder" placeholder="Calle, ciudad, código postal" />
+          </div>
+
+          <div>
+            <label data-i18n="form.phone.label" class="block text-sm text-gray-300 mb-1.5" for="phone">Teléfono <span class="text-gray-500 text-xs" data-i18n="form.optional">(opcional)</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" class="input-field" data-i18n-attr="placeholder|form.phone.placeholder" placeholder="(616) 555-0123" />
+          </div>
+
+          <fieldset class="pt-2">
+            <legend data-i18n="form.interests.legend" class="text-sm text-gray-300 mb-3">¿Cómo podemos ayudarte?</legend>
+            <div class="space-y-2">
+              <label class="check">
+                <input type="checkbox" name="wantPastorContact" />
+                <span data-i18n="form.interests.pastor">Quiero que el pastor me contacte</span>
+              </label>
+              <label class="check">
+                <input type="checkbox" name="wantAttendService" />
+                <span data-i18n="form.interests.attend">Quiero asistir al servicio</span>
+              </label>
+              <label class="check">
+                <input type="checkbox" name="wantMoreInfo" />
+                <span data-i18n="form.interests.info">Quiero más información</span>
+              </label>
+              <label class="check">
+                <input type="checkbox" name="wantPrayer" id="prayer-toggle" />
+                <span data-i18n="form.interests.prayer">Tengo una petición de oración</span>
+              </label>
+
+              <div id="prayer-wrap" class="prayer-wrap">
+                <label data-i18n="form.prayer.label" class="block text-sm text-gray-300 mb-1.5" for="prayer-request">Tu petición de oración</label>
+                <textarea id="prayer-request" name="prayerRequest" rows="3" class="input-field resize-none" data-i18n-attr="placeholder|form.prayer.placeholder" placeholder="Comparte tu petición — la trataremos con confidencialidad."></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Honeypot for bots -->
+          <input type="text" name="botcheck" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
+
+          <button type="submit" id="submit-btn" class="btn-primary mt-2">
+            <span data-i18n="form.submit">Enviar</span>
+          </button>
+
+          <p data-i18n="form.privacy" class="text-xs text-gray-500 text-center mt-3">Tus datos solo se usarán para contactarte. No compartimos tu información.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="px-5 pb-8 pt-2 text-center text-gray-500 text-xs">
+      <p>© <span id="year"></span> Iglesia Bautista Bíblica · Grand Rapids, MI</p>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="translations.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
