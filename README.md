@@ -237,6 +237,49 @@ That produces a fresh `qr.png`. Print at the size you need — QR codes scale we
 
 ---
 
+## Printable thermal-sticker designs
+
+Pre-made, thermal-printer-ready sticker PNGs are in the repo:
+
+| File | Size | Best for |
+|---|---|---|
+| `sticker-40mm.png` | 320×320 px | 40mm round or square thermal labels (NIIMBOT D110, Phomemo T02, etc.) |
+| `sticker-50mm.png` | 400×400 px | 50mm round or square thermal labels |
+
+Both are **pure 1-bit black & white** (no grayscale, no anti-aliasing), so they print crisp on thermal printers without speckling. Layout:
+
+```
+¿ESTÁS SEGURO
+DE TU ETERNIDAD?
+
+  [ QR CODE ]
+
+Escanea para el
+Plan de Salvación
+IBB · GRAND RAPIDS
+```
+
+### Regenerating after a URL change
+
+```bash
+./generate-sticker.sh https://your-new-url.example.com
+```
+
+Updates both sticker files with the new URL embedded in the QR.
+
+### Printing
+
+Send the PNG to your thermal printer software (NIIMBOT app, Phomemo app, etc.) and select your label size. The square 320×320 / 400×400 files crop naturally to round labels of the same diameter — the design is centered to fit within the inscribed circle.
+
+### Requirements
+
+Generating new stickers requires `qrencode` and `imagemagick`:
+```bash
+brew install qrencode imagemagick
+```
+
+---
+
 ## Local preview
 
 Just double-click `index.html` to open it in a browser. Everything works offline except the form submission (which needs the internet to reach Web3Forms / Apps Script).
