@@ -30,7 +30,15 @@ const GOOGLE_APPS_SCRIPT_URL = ""; // filled in after church approves
 // =============================================================================
 
 const STORAGE_LANG_KEY = "plan-salvacion.lang";
+const STORAGE_SUBMIT_LOG_KEY = "plan-salvacion.submit-log"; // JSON array of recent submit timestamps
 const DEFAULT_LANG = "es";
+
+// Spam / abuse protection thresholds (all client-side; server adds another layer later).
+const SUBMIT_COOLDOWN_MS = 60 * 60 * 1000;      // 1 hour between submits from same browser
+const SUBMIT_DAILY_CAP = 3;                      // max successful submits per 24h per browser
+const MIN_FILL_TIME_MS = 3000;                   // bots fill in <2s; require 3s minimum
+
+let pageLoadedAt = Date.now();
 
 function getNested(obj, path) {
   return path.split(".").reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
@@ -203,6 +211,36 @@ async function submitToAppsScript(data) {
   return json;
 }
 
+function readSubmitLog() {
+  try {
+    const raw = localStorage.getItem(STORAGE_SUBMIT_LOG_KEY);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr.filter((n) => typeof n === "number") : [];
+  } catch {
+    return [];
+  }
+}
+
+function recordSubmit(now) {
+  const log = readSubmitLog().filter((ts) => now - ts < 24 * 60 * 60 * 1000); // prune >24h
+  log.push(now);
+  try { localStorage.setItem(STORAGE_SUBMIT_LOG_KEY, JSON.stringify(log)); } catch {}
+}
+
+function checkAbuseGate() {
+  const now = Date.now();
+  const log = readSubmitLog().filter((ts) => now - ts < 24 * 60 * 60 * 1000);
+  const last = log.length ? log[log.length - 1] : 0;
+
+  if (last && now - last < SUBMIT_COOLDOWN_MS) {
+    return { blocked: true, reason: "cooldown" };
+  }
+  if (log.length >= SUBMIT_DAILY_CAP) {
+    return { blocked: true, reason: "dailyCap" };
+  }
+  return { blocked: false };
+}
+
 function initForm() {
   const form = document.getElementById("connect-form");
   const btn = document.getElementById("submit-btn");
@@ -214,6 +252,19 @@ function initForm() {
     const data = collectFormData(form);
 
     if (data.botcheck) return; // honeypot — silently drop
+
+    // Bot heuristic: real humans don't fill this form in <3 seconds.
+    if (Date.now() - pageLoadedAt < MIN_FILL_TIME_MS) {
+      console.warn("Submission rejected: filled too fast");
+      return;
+    }
+
+    // Per-browser rate limit (1h cooldown + 3/day cap).
+    const gate = checkAbuseGate();
+    if (gate.blocked) {
+      showToast(t(gate.reason === "cooldown" ? "form.cooldown" : "form.dailyCap"), "error");
+      return;
+    }
 
     if (!data.firstName || !data.lastName) {
       showToast(t("form.validationMissing"), "error");
@@ -232,6 +283,7 @@ function initForm() {
       }
       form.reset();
       document.getElementById("prayer-wrap")?.classList.remove("open");
+      recordSubmit(Date.now());
       showToast(t("form.success"));
     } catch (err) {
       console.error("Submit failed:", err);
@@ -256,6 +308,7 @@ function initStats() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  pageLoadedAt = Date.now();
   document.getElementById("year").textContent = new Date().getFullYear();
   initLanguage();
   initStats();

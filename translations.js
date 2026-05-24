@@ -83,6 +83,8 @@ window.TRANSLATIONS = {
       success: "¡Gracias! Hemos recibido tu mensaje. Te contactaremos pronto.",
       error: "Hubo un problema al enviar. Por favor intenta de nuevo o llama al 616-287-4503.",
       validationMissing: "Por favor completa tu nombre y apellido.",
+      cooldown: "Ya nos enviaste un mensaje hace poco. Te contactaremos pronto.",
+      dailyCap: "Has enviado varios mensajes hoy. Si necesitas algo urgente, llámanos al 616-287-4503.",
     },
   },
 
@@ -168,6 +170,8 @@ window.TRANSLATIONS = {
       success: "Thank you! We've received your message. We'll be in touch soon.",
       error: "Something went wrong. Please try again or call 616-287-4503.",
       validationMissing: "Please fill in your first and last name.",
+      cooldown: "You already sent us a message recently. We'll be in touch soon.",
+      dailyCap: "You've sent several messages today. If something is urgent, please call 616-287-4503.",
     },
   },
 };

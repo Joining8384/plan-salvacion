@@ -154,6 +154,30 @@ function doPost(e) {
 
 ---
 
+## Spam / abuse protection
+
+Multiple layers, all transparent to real users:
+
+1. **Hidden honeypot field** — invisible to humans, but bots auto-fill every input. If it's filled, the submission is silently dropped.
+2. **Minimum fill time (3 seconds)** — bots fill forms in under 2 seconds. Submissions that arrive faster than 3 seconds after page load are dropped. Humans never notice.
+3. **Per-browser cooldown (1 hour)** — after a successful submit, the same browser is blocked from submitting again for 1 hour. The user sees a friendly "ya nos enviaste un mensaje hace poco" message, not a broken-looking error.
+4. **Per-browser daily cap (3 submissions / 24h)** — caps any single browser at 3 submissions per day to stop sustained abuse.
+5. **Submit button disabled during request** — stops rapid double-clicks creating duplicate submissions.
+6. **Web3Forms built-in spam scoring** — the current backend runs each submission through its own spam filter before delivering the email.
+7. **(Future, when Apps Script is live)** — the server can additionally dedupe by `name + phone` within 24 hours, so two attempts from the same person on different devices/browsers also get caught.
+
+**What this does NOT stop:** a determined human attacker using different browsers, devices, or incognito sessions. That level of abuse requires CAPTCHA or IP-rate-limiting, which adds friction for real users. For a church plan-of-salvation page, the current protection is well-calibrated — high enough to stop drive-by spam, low enough that visitors with genuine intent never hit a wall.
+
+To adjust the thresholds, edit these constants at the top of `app.js`:
+
+```js
+const SUBMIT_COOLDOWN_MS = 60 * 60 * 1000;  // ms between submits
+const SUBMIT_DAILY_CAP = 3;                  // max submits / 24h
+const MIN_FILL_TIME_MS = 3000;               // min ms from page load to submit
+```
+
+---
+
 ## Live counters (visits + salvations)
 
 The page shows two counters mid-scroll: **"X personas han visitado · Y han dicho SÍ a Cristo"**, framed as year-to-date stats with the current year shown automatically.
