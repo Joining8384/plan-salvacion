@@ -64,8 +64,7 @@ function applyTranslations(lang) {
 
 function initLanguage() {
   const stored = localStorage.getItem(STORAGE_LANG_KEY);
-  const browser = (navigator.language || "es").slice(0, 2);
-  const initial = stored || (browser === "en" ? "en" : DEFAULT_LANG);
+  const initial = stored || DEFAULT_LANG;
   applyTranslations(initial);
 
   document.querySelectorAll(".lang-pill button").forEach((btn) => {
