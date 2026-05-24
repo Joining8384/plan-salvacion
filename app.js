@@ -112,6 +112,7 @@ function collectFormData(form) {
     lastName: (fd.get("lastName") || "").toString().trim(),
     address: (fd.get("address") || "").toString().trim(),
     phone: (fd.get("phone") || "").toString().trim(),
+    professionOfFaith: (fd.get("professionOfFaith") || "").toString(), // "yes" | "no" | "more-info" | ""
     wantPastorContact: checked("wantPastorContact"),
     wantAttendService: checked("wantAttendService"),
     wantMoreInfo: checked("wantMoreInfo"),
@@ -121,6 +122,12 @@ function collectFormData(form) {
     submittedAt: new Date().toISOString(),
     botcheck: (fd.get("botcheck") || "").toString(),
   };
+}
+
+function professionLabel(value, lang) {
+  if (!value) return "—";
+  const labels = window.TRANSLATIONS[lang].form.profession;
+  return { yes: labels.yes, no: labels.no, "more-info": labels.moreInfo }[value] || value;
 }
 
 function buildInterestsSummary(data, lang) {
@@ -136,7 +143,12 @@ function buildInterestsSummary(data, lang) {
 async function submitToWeb3Forms(data) {
   const lang = data.language;
   const interestsSummary = buildInterestsSummary(data, lang);
-  const subject = `[Plan de Salvación] ${data.firstName} ${data.lastName}${data.wantPrayer ? " — petición de oración" : ""}`;
+  const profession = professionLabel(data.professionOfFaith, lang);
+  const subjectFlags = [
+    data.professionOfFaith === "yes" ? " — ¡PROFESIÓN DE FE!" : "",
+    data.wantPrayer ? " — petición de oración" : "",
+  ].join("");
+  const subject = `[Plan de Salvación] ${data.firstName} ${data.lastName}${subjectFlags}`;
 
   const payload = {
     access_key: WEB3FORMS_ACCESS_KEY,
@@ -147,6 +159,7 @@ async function submitToWeb3Forms(data) {
     "Nombre": `${data.firstName} ${data.lastName}`,
     "Teléfono": data.phone || "—",
     "Dirección": data.address || "—",
+    "Profesión de fe": profession,
     "Intereses": interestsSummary,
     "Petición de oración": data.wantPrayer ? (data.prayerRequest || "(sin texto)") : "—",
     "Idioma del visitante": lang.toUpperCase(),

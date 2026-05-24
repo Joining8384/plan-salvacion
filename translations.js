@@ -34,6 +34,10 @@ window.TRANSLATIONS = {
       },
       closing: 'Hoy puedes ser salvo. <br/> “Cree en el Señor Jesucristo, y serás salvo, tú y tu casa.”',
       "closing.ref": "— Hechos 16:31",
+      pray: {
+        title: "Puedes Orar Así",
+        body: "“Padre: Acepto que soy pecador. Creo de corazón que Jesucristo murió por mis pecados, y resucitó para que yo fuera justificado delante de ti. Gracias por darme la Vida Eterna. En el nombre de Jesucristo, Amén.”",
+      },
     },
     church: {
       location: "Grand Rapids, Michigan",
@@ -50,6 +54,12 @@ window.TRANSLATIONS = {
       lastName:  { label: 'Apellido <span class="text-gold-400">*</span>', placeholder: "Tu apellido" },
       address:   { label: 'Dirección <span class="text-gray-500 text-xs">(opcional)</span>', placeholder: "Calle, ciudad, código postal" },
       phone:     { label: 'Teléfono <span class="text-gray-500 text-xs">(opcional)</span>', placeholder: "(616) 555-0123" },
+      profession: {
+        legend: "¿Hiciste la profesión de fe?",
+        yes:      "Sí, hice la profesión de fe hoy",
+        no:       "No, todavía no",
+        moreInfo: "Quiero más información antes de decidir",
+      },
       interests: {
         legend: "¿Cómo podemos ayudarte?",
         pastor: "Quiero que el pastor me contacte",
@@ -103,6 +113,10 @@ window.TRANSLATIONS = {
       },
       closing: 'Today you can be saved. <br/> “Believe on the Lord Jesus Christ, and thou shalt be saved, and thy house.”',
       "closing.ref": "— Acts 16:31",
+      pray: {
+        title: "You Can Pray Like This",
+        body: "“Father: I admit that I am a sinner. I believe with all my heart that Jesus Christ died for my sins and rose again so that I might be justified before You. Thank You for giving me Eternal Life. In the name of Jesus Christ, Amen.”",
+      },
     },
     church: {
       location: "Grand Rapids, Michigan",
@@ -119,6 +133,12 @@ window.TRANSLATIONS = {
       lastName:  { label: 'Last name <span class="text-gold-400">*</span>',  placeholder: "Your last name" },
       address:   { label: 'Address <span class="text-gray-500 text-xs">(optional)</span>', placeholder: "Street, city, ZIP" },
       phone:     { label: 'Phone <span class="text-gray-500 text-xs">(optional)</span>',   placeholder: "(616) 555-0123" },
+      profession: {
+        legend: "Did you make a profession of faith?",
+        yes:      "Yes, I made the profession of faith today",
+        no:       "No, not yet",
+        moreInfo: "I'd like more information before deciding",
+      },
       interests: {
         legend: "How can we help you?",
         pastor: "I'd like the pastor to contact me",

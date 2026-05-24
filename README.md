@@ -74,7 +74,7 @@ When the church is ready, you can switch to a backend that:
 
 1. In Google Drive, **New → Google Sheet**. Name it something like "Plan de Salvación – Respuestas". Add a header row:
    ```
-   timestamp | firstName | lastName | address | phone | wantPastorContact | wantAttendService | wantMoreInfo | wantPrayer | prayerRequest | language
+   timestamp | firstName | lastName | address | phone | professionOfFaith | wantPastorContact | wantAttendService | wantMoreInfo | wantPrayer | prayerRequest | language
    ```
 2. In that Sheet: **Extensions → Apps Script**. Delete the default `function myFunction()` and paste the script below.
 3. Inside the script, change `NOTIFY_EMAIL` to whoever should receive notifications.
@@ -101,6 +101,7 @@ function doPost(e) {
       data.lastName || "",
       data.address || "",
       data.phone || "",
+      data.professionOfFaith || "",
       data.wantPastorContact ? "✓" : "",
       data.wantAttendService ? "✓" : "",
       data.wantMoreInfo ? "✓" : "",
@@ -109,6 +110,13 @@ function doPost(e) {
       data.language || "",
     ]);
 
+    const professionLabels = {
+      "yes": "Sí, hizo la profesión de fe hoy",
+      "no": "No, todavía no",
+      "more-info": "Quiere más información antes de decidir",
+    };
+    const profession = professionLabels[data.professionOfFaith] || "—";
+
     const interests = [
       data.wantPastorContact && "Contacto del pastor",
       data.wantAttendService && "Asistir al servicio",
@@ -116,10 +124,16 @@ function doPost(e) {
       data.wantPrayer && "Petición de oración",
     ].filter(Boolean).join(", ") || "—";
 
+    const flags = [
+      data.professionOfFaith === "yes" ? "¡PROFESIÓN DE FE!" : "",
+      data.wantPrayer ? "petición de oración" : "",
+    ].filter(Boolean).join(" — ");
+
     const body =
       `Nombre: ${data.firstName} ${data.lastName}\n` +
       `Teléfono: ${data.phone || "—"}\n` +
       `Dirección: ${data.address || "—"}\n` +
+      `Profesión de fe: ${profession}\n` +
       `Intereses: ${interests}\n` +
       (data.wantPrayer ? `\nPetición de oración:\n${data.prayerRequest || "(sin texto)"}\n` : "") +
       `\nIdioma: ${(data.language || "").toUpperCase()}\n` +
@@ -127,7 +141,7 @@ function doPost(e) {
 
     MailApp.sendEmail({
       to: NOTIFY_EMAIL,
-      subject: `[Plan de Salvación] ${data.firstName} ${data.lastName}${data.wantPrayer ? " — petición de oración" : ""}`,
+      subject: `[Plan de Salvación] ${data.firstName} ${data.lastName}${flags ? " — " + flags : ""}`,
       body,
     });
 

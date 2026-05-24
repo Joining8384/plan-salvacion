@@ -115,6 +115,25 @@
         border: solid #0a1226; border-width: 0 2px 2px 0;
         transform: rotate(45deg);
       }
+      .check input[type="radio"] {
+        appearance: none; -webkit-appearance: none;
+        width: 1.2rem; height: 1.2rem; margin-top: 0.15rem;
+        border: 1.5px solid rgba(246, 217, 138, 0.55);
+        border-radius: 50%;
+        background: rgba(7, 13, 28, 0.5);
+        cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .check input[type="radio"]:checked {
+        border-color: #d9a441;
+      }
+      .check input[type="radio"]:checked::after {
+        content: ""; position: absolute;
+        inset: 0.22rem;
+        background: #d9a441;
+        border-radius: 50%;
+      }
 
       .prayer-wrap {
         max-height: 0; opacity: 0; overflow: hidden;
@@ -257,6 +276,13 @@
             </p>
             <p data-i18n="plan.closing.ref" class="text-gold-400 text-sm mt-3">— Hechos 16:31</p>
           </article>
+
+          <article class="card-glass rounded-xl p-6 sm:p-7 mt-2">
+            <h3 data-i18n="plan.pray.title" class="font-serif text-xl sm:text-2xl text-gold-300 text-center mb-4">Puedes Orar Así</h3>
+            <p data-i18n="plan.pray.body" class="verse text-gray-100 text-lg leading-relaxed text-center">
+              "Padre: Acepto que soy pecador. Creo de corazón que Jesucristo murió por mis pecados, y resucitó para que yo fuera justificado delante de ti. Gracias por darme la Vida Eterna. En el nombre de Jesucristo, Amén."
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -323,6 +349,24 @@
             <label data-i18n="form.phone.label" class="block text-sm text-gray-300 mb-1.5" for="phone">Teléfono <span class="text-gray-500 text-xs" data-i18n="form.optional">(opcional)</span></label>
             <input id="phone" name="phone" type="tel" autocomplete="tel" class="input-field" data-i18n-attr="placeholder|form.phone.placeholder" placeholder="(616) 555-0123" />
           </div>
+
+          <fieldset class="pt-2">
+            <legend data-i18n="form.profession.legend" class="text-sm text-gray-300 mb-3">¿Hiciste la profesión de fe?</legend>
+            <div class="space-y-2">
+              <label class="check">
+                <input type="radio" name="professionOfFaith" value="yes" />
+                <span data-i18n="form.profession.yes">Sí, hice la profesión de fe hoy</span>
+              </label>
+              <label class="check">
+                <input type="radio" name="professionOfFaith" value="no" />
+                <span data-i18n="form.profession.no">No, todavía no</span>
+              </label>
+              <label class="check">
+                <input type="radio" name="professionOfFaith" value="more-info" />
+                <span data-i18n="form.profession.moreInfo">Quiero más información antes de decidir</span>
+              </label>
+            </div>
+          </fieldset>
 
           <fieldset class="pt-2">
             <legend data-i18n="form.interests.legend" class="text-sm text-gray-300 mb-3">¿Cómo podemos ayudarte?</legend>
