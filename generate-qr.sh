@@ -5,7 +5,7 @@
 #   ./generate-qr.sh https://example.com      # override URL
 set -euo pipefail
 
-DEFAULT_URL="https://joining8384.github.io/plan-salvacion/"
+DEFAULT_URL="https://ibbgrmi.github.io/plan-salvacion/"
 URL="${1:-$DEFAULT_URL}"
 OUT="qr.png"
 

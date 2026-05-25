@@ -302,7 +302,7 @@ Just double-click `index.html` to open it in a browser. Everything works offline
 When the church creates its own GitHub account (or organization), this repo can be transferred:
 
 1. On GitHub: **Settings → Transfer ownership** → enter the church's GitHub username.
-2. The URL changes from `joining8384.github.io/plan-salvacion` to `<new-owner>.github.io/plan-salvacion`.
+2. The URL changes to `<new-owner>.github.io/plan-salvacion`.
 3. Regenerate the QR with the new URL using `generate-qr.sh`.
 
 ---

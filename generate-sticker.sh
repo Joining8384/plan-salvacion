@@ -13,7 +13,7 @@
 # no dithering, no anti-aliasing artifacts that confuse thermal printers.
 set -euo pipefail
 
-DEFAULT_URL="https://joining8384.github.io/plan-salvacion/"
+DEFAULT_URL="https://ibbgrmi.github.io/plan-salvacion/"
 URL="${1:-$DEFAULT_URL}"
 
 for tool in qrencode magick; do
